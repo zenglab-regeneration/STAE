@@ -29,16 +29,19 @@ conda create -n testconda python = 3.9
 
 ## Examples from paper
 ### Dataset 
-- Single-cell transcriptome gene expression matrix
-- Spatial transcriptome gene expression matrix
-- Single cell type data
+- bimr before_iterative_mapping_result
+- aimr after_iterative_mapping_result
+- bsd before_sc_data
+- asd after_sc_data
+- mg marker_gene
+- pse pseudotime
 
 ### Environment settings
 
 
 ```
 library('STAE')
-help(package = 'DRIM')
+help(package = 'STAE')
 
 #set the py conda
 env_python_set("D:/anaconda/envs/testconda")
@@ -46,4 +49,10 @@ env_python_set("D:/anaconda/envs/testconda")
 #Check the dependent environment for the program to run, and automatically install the missing python package
 env_test()
 ```
+pdr = 0.1 #position distance ratio
+dam = tgs1+_Neoblast #Differentiation and migration of cell type
+Parameter_settings(pdr,dam)
+data_deal(bimr,aimr,bsd,asd,mg,pse)
+stae_main
+
 
