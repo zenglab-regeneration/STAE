@@ -1,14 +1,9 @@
-from time import time
-import plotly.express as px
-import plotly.graph_objects as go
 import pandas as pd
-import sys
 import os
+dir_root = os.getcwd()
 
-#读取程序所在位置
-dir_root=os.getcwd()
-#读取参数设置
 #parameter_settings_f=pd.read_csv(dir_root+'/data/parameter_settings.csv')
+
 begin_file_name = dir_root+"/data/before_iterative_mapping_result.csv"
 begin_mapping_csv = pd.read_csv(begin_file_name,index_col = 0)
 begin_length_col = max(begin_mapping_csv.imagecol) - min(begin_mapping_csv.imagecol)

@@ -4,7 +4,7 @@
 \alias{stae_main}
 \title{stae_main}
 \usage{
-stae_main()
+stae_main(pdr, dam)
 }
 \description{
 main programe

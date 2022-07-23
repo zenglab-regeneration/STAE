@@ -1,25 +1,15 @@
 import torch
 import torch.nn as nn
-import torch.utils.data as Data
 from torch import optim
 import pandas as pd
 import numpy as np
-import plotly.express as px
-import plotly.graph_objects as go
-import networkx as nx
 import scanpy as sc
-from sklearn.decomposition import PCA
 from sklearn.preprocessing import MinMaxScaler
-#import 3
-import sys
 import os
-cuda_num = 0
-dir_root=os.getcwd()
+dir_root = os.getcwd()
 class AutoEncoder(nn.Module):
     def __init__(self,n_feature,n_hidden_1, n_hidden_2,n_output):
         super(AutoEncoder,self).__init__()
-
-        # 压缩
         self.encoder = nn.Sequential(
             nn.Linear(n_feature,n_hidden_1),
             nn.ReLU(),
@@ -31,31 +21,18 @@ class AutoEncoder(nn.Module):
         self.decoder = nn.Sequential(
             nn.Linear(n_output, n_hidden_2),
             nn.BatchNorm1d(num_features=n_hidden_2),
-            # nn.ReLU(),
-            # nn.Tanh(),
             nn.Linear(n_hidden_2, n_hidden_1),
             nn.BatchNorm1d(num_features=n_hidden_1),
-            # nn.ReLU(),
-            # nn.Tanh(),
             nn.Linear(n_hidden_1, n_feature),
             nn.BatchNorm1d(num_features=n_feature),
-            # nn.Tanh(),
-            # nn.ReLU(),
         )
 
     def forward(self, x):
-
         encoded = self.encoder(x)
         decoded = self.decoder(encoded)
         return encoded, decoded
-#save_file
-#two_time_connectivities_file = "/home/sunhang/data/planarian/new_connectivities/"+ before_time +"_"+ after_time + "_connectivities_data.csv"
-#two_time_distance_file = "/home/sunhang/data/planarian/new_connectivities/"+ before_time +"_"+ after_time + "_distances_data.csv"
-two_time_anndata_file = dir_root+"/data/tow_time_adata.h5ad"
-#loc_distance_file = "/home/sunhang/data/planarian/new_connectivities/"+ before_time +"_"+ after_time + "pic_distances.csv"
-autoencode_file = dir_root+"/data/tow_time_auto_encode_dim_red_hvg_32.csv"
-#pseudo_file = "/home/sunhang/data/planarian/new_connectivities/cell_pseudotime_n_tip_5000.csv"
-#导入文件每个两个时间点的mapping结果和这个两个时间点的sc_gene表达
+two_time_anndata_file = dir_root+"/data/intermediate_result/tow_time_adata.h5ad"
+autoencode_file = dir_root+"/data/intermediate_result/tow_time_auto_encode_dim_red_hvg_32.csv"
 before_sc_file = dir_root+"/data/before_sc_data.csv"
 after_sc_file = dir_root+"/data/after_sc_data.csv"
 
@@ -68,16 +45,11 @@ gene_num = []
 gene_name = []
 num = 0
 for i in single_cell_adata.var.highly_variable:
-    #print(i)
     if i == True:
-        #num = num +1
-        #print(num)
-        #print(two_sc_csv.index[num])
-        #num = num +1
         gene_num.append(str(num))
         gene_name.append(two_sc_csv.index[num])
     num = num + 1
-    #print(num)|
+
 two_sc_csv_hvg = two_sc_csv.loc[gene_name]
 two_sc_np = two_sc_csv_hvg.values.T
 two_sc_csv_hvg_T = pd.DataFrame(data=two_sc_csv_hvg.values.T,index=two_sc_csv_hvg.columns,columns=two_sc_csv_hvg.index)
@@ -104,14 +76,13 @@ for epoch in range(500):
     optimizer.zero_grad()
     loss.backward()
     optimizer.step()
-    print(epoch, loss.item())
 enc,dec = model(feature_test.cuda())
 loss = loss_func(dec, feature_test.cuda())
-print(loss.item())
+#print(loss.item())
 single_cell_adata = sc.read(two_time_anndata_file)
 two_times_single_cell_gene = pd.DataFrame(data = single_cell_adata.X.T , index= single_cell_adata.var.index,columns=single_cell_adata.obs.index)
-#print(two_times_single_cell_gene)
-two_times_single_cell_gene = two_times_single_cell_gene.loc[gene_num]
+
+two_times_single_cell_gene = two_times_single_cell_gene.loc[gene_name]
 two_times_single_cell_gene_T = pd.DataFrame(data=two_times_single_cell_gene.values.T,index=two_times_single_cell_gene.columns,columns=two_times_single_cell_gene.index)
 two_times_single_cell_gene_T_value = two_times_single_cell_gene_T.values
 two_times_single_cell_gene_T_value = torch.FloatTensor(two_times_single_cell_gene_T_value)
