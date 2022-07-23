@@ -38,7 +38,8 @@ env_test<-function(){
                     'anndata',
                     'torch',
                     'scipy',
-                    'rich'
+                    'rich',
+                    'kaleido'
                     )
   for(package_name in package_detect){
     if(!py_module_available(package_name)){
@@ -112,6 +113,7 @@ data_deal<-function(bimr,aimr,bsd,asd,mg,pse){
   print(system.time(fwrite(aimr,file = paste(data_path,'/after_iterative_mapping_result.csv',sep = ''))))
   print(system.time(fwrite(bsd,file = paste(data_path,'/before_sc_data.csv',sep = ''))))
   print(system.time(fwrite(asd,file = paste(data_path,'/after_sc_data.csv',sep = ''))))
+  #this is need Filter empty text
   print(system.time(fwrite(mg,file = paste(data_path,'/marker_gene.csv',sep = ''))))
   print(system.time(fwrite(pse,file = paste(data_path,'/pseudotime.csv',sep = ''))))
 }
