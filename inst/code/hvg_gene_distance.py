@@ -17,7 +17,7 @@ choose_hvg_distance_file = dir_root+"/data/intermediate_result/tow_time_choose_h
 before_sc_csv = choose_before_sc_data_csv
 after_sc_csv = choose_after_sc_data_csv
 gene_list_csv = pd.read_csv(gene_list_file,index_col=0)
- 
+before_gene_choose_csv = before_sc_csv.loc[gene_list_csv.index]
 after_gene_choose_csv = after_sc_csv.loc[gene_list_csv.index]
 result_np = np.zeros([len(before_gene_choose_csv.columns),len(after_gene_choose_csv.columns)])
 result_csv = pd.DataFrame(data=result_np , index = before_gene_choose_csv.columns,columns=after_gene_choose_csv.columns)
