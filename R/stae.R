@@ -63,8 +63,8 @@ env_test<-function(){
 #'@param pdr position_distance_ratio
 #'@param dam Differentiation and migration of cell type
 #'@export
-Parameter_settings<-function(pdr,dam){
-  parameter_settings_csv<-c(pdr,dam)
+Parameter_settings<-function(pdr){
+  parameter_settings_csv<-c(pdr)
   dir=packages_path()
   parameter_settings_path = paste(dir,"/data/parameter_settings.csv",sep="")
   write.table(parameter_settings_csv,file = parameter_settings_path,row.names = FALSE,col.names = 'parameter')
@@ -109,19 +109,19 @@ data_deal<-function(bimr,aimr,bsd,asd,mg,pse){
   # write.csv(asd,file = paste(data_path,'/after_sc_data.csv',sep = ''))
   # write.csv(mg,file = paste(data_path,'/marker_gene.csv',sep = ''))
   # write.csv(pse,file = paste(data_path,'/pseudotime.csv',sep = ''))
-  print(system.time(fwrite(bimr,file = paste(data_path,'/before_iterative_mapping_result.csv',sep = ''))))
-  print(system.time(fwrite(aimr,file = paste(data_path,'/after_iterative_mapping_result.csv',sep = ''))))
-  print(system.time(fwrite(bsd,file = paste(data_path,'/before_sc_data.csv',sep = ''))))
-  print(system.time(fwrite(asd,file = paste(data_path,'/after_sc_data.csv',sep = ''))))
+  fwrite(bimr,file = paste(data_path,'/before_iterative_mapping_result.csv',sep = ''))
+  fwrite(aimr,file = paste(data_path,'/after_iterative_mapping_result.csv',sep = ''))
+  fwrite(bsd,file = paste(data_path,'/before_sc_data.csv',sep = ''))
+  fwrite(asd,file = paste(data_path,'/after_sc_data.csv',sep = ''))
   #this is need Filter empty text
-  print(system.time(fwrite(mg,file = paste(data_path,'/marker_gene.csv',sep = ''))))
-  print(system.time(fwrite(pse,file = paste(data_path,'/pseudotime.csv',sep = ''))))
+  fwrite(mg,file = paste(data_path,'/marker_gene.csv',sep = ''))
+  fwrite(pse,file = paste(data_path,'/pseudotime.csv',sep = ''))
 }
 #'@title stae_main 
 #'@description main programe
 #'@export
-stae_main <- function(pdr,dam){
-  Parameter_settings(pdr,dam)
+stae_main <- function(pdr){
+  Parameter_settings(pdr = pdr)
   call_python_program('move_center')
   call_python_program('TL_pic_distance_new')
   call_python_program('TL_sample_get_adata')
@@ -129,7 +129,17 @@ stae_main <- function(pdr,dam){
   call_python_program('hvg_gene_distance')
   call_python_program('prepare_comp')
   call_python_program('TL_get')
+  reault_path <- paste(packages_path(),'/data/tow_time_TL_edges.csv',sep = "")
+  stae_result <- fread(input = reault_path)
+  return(stae_result)
+}
+#'@title stae_draw
+#' @description draw result
+#' @export
+stae_draw <- function(dam){
+  Parameter_settings(pdr = dam)
   call_python_program('pic')
+  print(paste(packages_path(),'/data/result/3D.html',sep = ""))
 }
 
 

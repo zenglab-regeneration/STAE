@@ -10,7 +10,7 @@ dir_root = os.getcwd()
 
 parameter_settings_f=pd.read_csv(dir_root+'/data/parameter_settings.csv')
 # cell_type_choose= sys.argv[1]
-cell_type_choose = str(parameter_settings_f['parameter'][1])
+cell_type_choose = str(parameter_settings_f['parameter'][0])
 
 two_time_anndata_file = dir_root+"/data/intermediate_result/tow_time_adata.h5ad"
 TL_edges_save_file = dir_root+"/data/result/tow_time_TL_edges.csv"
