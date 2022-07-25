@@ -52,8 +52,9 @@ data_deal(bimr,aimr,bsd,asd,mg,pse)
 #position distance ratio
 pdr = 0.1  
 #Differentiation and migration of cell type
-dam = tgs1+_Neoblast 
-stae_main(pdr,dam)  
+dam = c('tgs1+_Neoblast') 
+stae_main(pdr)  
+stae_pic(dam)
 ```
 
 
