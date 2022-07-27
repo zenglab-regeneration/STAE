@@ -106,7 +106,7 @@ fig.update_layout(
         xaxis = noaxis,
         yaxis = noaxis,
         zaxis = noaxis,
-        aspectratio=dict(x=1, y=1, z=1)#改变画布空间比例为1：1：1
+        aspectratio=dict(x=1, y=1, z=1)
         ),
     margin=dict(r=0, l=0, b=0, t=0),
     scene_camera = camera
