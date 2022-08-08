@@ -5,7 +5,7 @@
 \title{parameter_setting
 Hyperparameter setting}
 \usage{
-Parameter_settings(pdr, dam)
+Parameter_settings(pdr)
 }
 \arguments{
 \item{pdr}{position_distance_ratio}
