@@ -3,6 +3,7 @@ STAE:Spatial Temporal Auto-Encoder
 website url:http://db.regeomics.cn/
 
 ## Overview
+With the spatial transcriptomics data of single-cell resolution, we can recognize the spatio-temporal patterns of planarian. As the single cell RNA-seq data are characterized by high signature dimensions and feature redundancy, the predictions made directly in the original space can lead to unsatisfactory pattern recognition for differentiation and migration. To discover the temporal and spatial pattern, we propose the Spatial Temporal Auto-Encoder (STAE) algorithm to extract recessive features from single cell data and fuse the cell’s temporal and spatial properties to infer differentiation and migration.
 ## Installation
 ### Setup
 STAE is available from GitHub with:
