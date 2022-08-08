@@ -50,13 +50,19 @@ env_python_set("D:/anaconda/envs/testconda")
 
 #Check the dependent environment for the program to run, and automatically install the missing python package
 env_test()
+```
+### Data_deal
+```
 data_deal(bimr,aimr,bsd,asd,mg,pse)  
+```
+### Run
+```
 #position distance ratio
 pdr = 0.1  
 #Differentiation and migration of cell type
-dam = c('tgs1+_Neoblast') 
-stae_main(pdr)  
-stae_pic(dam)
+dam = c('Nb2') 
+stae(pdr)  
+stae_draw(dam)
 ```
 
 
