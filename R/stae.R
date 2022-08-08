@@ -103,12 +103,12 @@ data_deal<-function(bimr,aimr,bsd,asd,mg,pse){
   if(!dir.exists(data_path)){
     dir.create(data_path)
   }
-  # write.csv(bimr,file = paste(data_path,'/before_iterative_mapping_result.csv',sep = ''))
-  # write.csv(aimr,file = paste(data_path,'/after_iterative_mapping_result.csv',sep = ''))
-  # write.csv(bsd,file = paste(data_path,'/before_sc_data.csv',sep = ''))
-  # write.csv(asd,file = paste(data_path,'/after_sc_data.csv',sep = ''))
-  # write.csv(mg,file = paste(data_path,'/marker_gene.csv',sep = ''))
-  # write.csv(pse,file = paste(data_path,'/pseudotime.csv',sep = ''))
+  # write.csv(as.dataframe(bimr),file = paste(data_path,'/before_iterative_mapping_result.csv',sep = ''))
+  # write.csv(as.dataframe(aimr),file = paste(data_path,'/after_iterative_mapping_result.csv',sep = ''))
+  # write.csv(as.dataframe(bsd),file = paste(data_path,'/before_sc_data.csv',sep = ''))
+  # write.csv(as.dataframe(asd),file = paste(data_path,'/after_sc_data.csv',sep = ''))
+  # write.csv(as.dataframe(mg),file = paste(data_path,'/marker_gene.csv',sep = ''))
+  # write.csv(as.dataframe(pse),file = paste(data_path,'/pseudotime.csv',sep = ''))
   fwrite(bimr,file = paste(data_path,'/before_iterative_mapping_result.csv',sep = ''))
   fwrite(aimr,file = paste(data_path,'/after_iterative_mapping_result.csv',sep = ''))
   fwrite(bsd,file = paste(data_path,'/before_sc_data.csv',sep = ''))
