@@ -1,6 +1,6 @@
 # STAE
+STAE:Spatial Temporal Auto-Encoder  
 This is an R package  
-STAE:Spatial Temporal Auto-Encoder
 website url:http://db.regeomics.cn/
 
 ## Overview
