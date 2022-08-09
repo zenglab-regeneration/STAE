@@ -31,12 +31,12 @@ conda create -n testconda python = 3.9
 
 ## Examples from paper
 ### Dataset 
-- bimr before_iterative_mapping_result
-- aimr after_iterative_mapping_result
-- bsd before_sc_data
-- asd after_sc_data
-- mg marker_gene
-- pse pseudotime
+- bimr before_iterative_mapping_result   By matching single cells, the gene expression of the spatial data at the previous time point is obtained
+- aimr after_iterative_mapping_result    By matching single cells, the gene expression of the spatial data at the latter time point is obtained
+- bsd before_sc_data                     Gene expression in single cells at the previous time point_
+- asd after_sc_data                      Gene expression in cells at the latter time point_
+- mg marker_gene                         Cell's id number and type
+- pse pseudotime                         Pseudo-time information for each cell
 
 ### Environment settings
 
