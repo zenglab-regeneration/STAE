@@ -71,7 +71,7 @@ data_deal(bimr,aimr,bsd,asd,mg,pse)
 pdr = 0.1  
 #pseflag ：Pseudo-time files are not used by default
 pseflag <- FALSE
-stae(pdr)  
+stae(pdr,pseflag)  
 ```
 ### Simple_draw
 ```
