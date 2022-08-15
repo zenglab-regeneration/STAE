@@ -4,7 +4,7 @@
 \alias{data_deal}
 \title{data_deal}
 \usage{
-data_deal(bimr, aimr, bsd, asd, mg, pse)
+data_deal(bimr, aimr, bsd, asd, pse)
 }
 \arguments{
 \item{bimr}{before_iterative_mapping_result}
@@ -14,8 +14,6 @@ data_deal(bimr, aimr, bsd, asd, mg, pse)
 \item{bsd}{before_sc_data}
 
 \item{asd}{after_sc_data}
-
-\item{mg}{marker_gene}
 
 \item{pse}{pseudotime}
 }

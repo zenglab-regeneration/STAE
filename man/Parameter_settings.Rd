@@ -5,10 +5,12 @@
 \title{parameter_setting
 Hyperparameter setting}
 \usage{
-Parameter_settings(pdr)
+Parameter_settings(pdr, pseflag)
 }
 \arguments{
 \item{pdr}{position_distance_ratio}
+
+\item{pseflag}{Whether there is pseudo-temporal data(True/False) : True}
 
 \item{dam}{Differentiation and migration of cell type}
 }
