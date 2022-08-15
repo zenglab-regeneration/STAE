@@ -60,14 +60,23 @@ env_test()
 ### Data_deal
 ```
 data_deal(bimr,aimr,bsd,asd,mg,pse)  
+
+#If you don't have a pse file please pass in an empty data frame
+pse <- as.data.frame(matrix(nrow=0,ncol=3))
+data_deal(bimr,aimr,bsd,asd,mg,pse) 
 ```
 ### Run
 ```
 #position distance ratio
 pdr = 0.1  
+#pseflag ：Pseudo-time files are not used by default
+pseflag <- FALSE
+stae(pdr)  
+```
+### Simple_draw
+```
 #Differentiation and migration of cell type
 dam = c('Nb2') 
-stae(pdr)  
 stae_draw(dam)
 ```
 ![STAE_example](image/stae_example.png)
