@@ -1,4 +1,3 @@
-
 import pandas as pd
 import anndata as ad
 import warnings
@@ -19,7 +18,7 @@ after_mapping_csv["time"] = "after"
 comb_mapping_result_csv = before_mapping_csv.append(after_mapping_csv)
 comb_sc_csv = pd.merge(before_sc_csv,after_sc_csv,left_index=True, right_index=True)
 comb_sc_csv = comb_sc_csv.fillna(0)
-in_sc_csv = comb_sc_csv.loc[:,comb_mapping_result_csv.loc[:,"single_cell_name"].values]
+in_sc_csv = comb_sc_csv.loc[:,comb_mapping_result_csv.loc[:,"single_cell"].values]
 in_sc_csv.columns = comb_mapping_result_csv.index
 single_cell_adata = ad.AnnData(in_sc_csv.values.T)
 single_cell_adata.obs = comb_mapping_result_csv

@@ -5,8 +5,12 @@ import pandas as pd
 import numpy as np
 import scanpy as sc
 from sklearn.preprocessing import MinMaxScaler
+from scipy.spatial.distance import pdist, squareform
 import os
 dir_root = os.getcwd()
+print(dir_root)
+
+
 class AutoEncoder(nn.Module):
     def __init__(self,n_feature,n_hidden_1, n_hidden_2,n_output):
         super(AutoEncoder,self).__init__()
@@ -33,13 +37,19 @@ class AutoEncoder(nn.Module):
         return encoded, decoded
 two_time_anndata_file = dir_root+"/data/intermediate_result/tow_time_adata.h5ad"
 autoencode_file = dir_root+"/data/intermediate_result/tow_time_auto_encode_dim_red_hvg_32.csv"
+autoencode_distance_comp_file = dir_root+"/data/intermediate_result/tow_time_auto_encode_distances.csv"
 before_sc_file = dir_root+"/data/before_sc_data.csv"
 after_sc_file = dir_root+"/data/after_sc_data.csv"
 
 before_sc_csv = pd.read_csv(before_sc_file,index_col=0)
 after_sc_csv = pd.read_csv(after_sc_file,index_col=0)
+
 two_sc_csv = pd.merge(before_sc_csv,after_sc_csv,left_index=True,right_index=True)
 single_cell_adata = sc.read(two_time_anndata_file)
+before_single_cell_csv = single_cell_adata.obs.loc[single_cell_adata.obs["time"] == "before"]
+after_single_cell_csv = single_cell_adata.obs.loc[single_cell_adata.obs["time"] == "after"]
+before_num = len(before_single_cell_csv.index)
+after_num = len(after_single_cell_csv.index)
 sc.pp.highly_variable_genes(single_cell_adata, flavor="seurat", n_top_genes=3000)
 gene_num = []
 gene_name = []
@@ -92,5 +102,12 @@ encoded_data_np = encoded_data.detach().numpy()
 mm = MinMaxScaler()
 X_train_standard = mm.fit_transform(encoded_data_np)
 sc_dim_reduce_standard = pd.DataFrame(data=X_train_standard.T,columns = single_cell_adata.obs.index)
+autoencode_reduce_dr_np = X_train_standard
+autoencode_distance_np = pdist(autoencode_reduce_dr_np, metric = "euclidean")
+autoencode_distance_np_X =squareform(autoencode_distance_np)
+two_time_autoencode_np = autoencode_distance_np_X[0:before_num,before_num:after_num + before_num]
+two_time_autoencode_np  = (two_time_autoencode_np - np.min(two_time_autoencode_np)) * (1 / (np.max(two_time_autoencode_np) - np.min(two_time_autoencode_np)))
+two_time_autoencode_csv = pd.DataFrame(data = two_time_autoencode_np,index = before_single_cell_csv.index,columns = after_single_cell_csv.index)
+two_time_autoencode_csv.to_csv(autoencode_distance_comp_file)
 sc_dim_reduce_standard.to_csv(autoencode_file)
 print("AE is over")

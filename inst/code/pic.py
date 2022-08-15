@@ -114,4 +114,5 @@ fig.update_layout(
 
 fig.write_html(dir_root+"/data/result/3D.html")
 fig.write_image(dir_root+"/data/result/3D.pdf")
+print("result:"+dir_root+"/data/result/3D.html")
 print("pic is over")

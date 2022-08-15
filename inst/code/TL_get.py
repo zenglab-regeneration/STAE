@@ -5,7 +5,6 @@ import networkx as nx
 import scanpy as sc
 from pathlib import Path
 import sys
-import os
 import warnings
 warnings.filterwarnings("ignore")
 dir_root = os.getcwd()
@@ -15,8 +14,12 @@ TILE_PATH.mkdir(parents=True, exist_ok=True)
 parameter_settings_f=pd.read_csv(dir_root+'/data/parameter_settings.csv')
 #ratio= sys.argv[1]
 ratio = float(parameter_settings_f['parameter'][0])
-
 ratio = float(ratio)
+pseudo_time_tag = parameter_settings_f['parameter'][1]
+
+# ratio= sys.argv[1]
+# pseudo_time_tag = sys.argv[2]
+# ratio = float(ratio)
 subcelltype_color = {}
 def bubbleSort(arr,serial):
     for i in range(1, len(arr)):
@@ -26,10 +29,12 @@ def bubbleSort(arr,serial):
                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
     return arr , serial
 two_time_anndata_file = dir_root+"/data/intermediate_result/tow_time_adata.h5ad"
-pseudo_file = dir_root+"/data/pseudotime.csv"
+if(pseudo_time_tag == True):
+    pseudo_file = dir_root+"/data/pseudotime.csv"
+    pseudo_csv = pd.read_csv(pseudo_file,index_col=0)
 autoencode_distance_comp_file = dir_root+"/data/intermediate_result/tow_time_auto_encode_distances.csv"
 pic_distance_comp_file = dir_root+"/data/intermediate_result/tow_time_pic_distances.csv"
-choose_hvg_distanc_comp_file = dir_root+"/data/intermediate_result/tow_time_choose_hvg_distances.csv"
+#choose_hvg_distanc_comp_file = "../data/intermediate_result/tow_time_choose_hvg_distances.csv"
 TL_edges_save_file = dir_root+"/data/result/tow_time_TL_edges.csv"
 samll_TL_edges_save_file = dir_root+"/data/result/tow_time_TL_edges_little_message.csv"
 single_cell_adata = sc.read(two_time_anndata_file)
@@ -42,14 +47,17 @@ two_time_autoencode_csv = pd.read_csv(autoencode_distance_comp_file,index_col=0)
 two_time_autoencode_np = two_time_autoencode_csv.values
 pic_distance_csv = pd.read_csv(pic_distance_comp_file,index_col=0)
 pic_distance_csv_np = pic_distance_csv.values
-two_time_choose_hvg_csv = pd.read_csv(choose_hvg_distanc_comp_file,index_col=0)
-two_time_choose_hvg_np  = two_time_choose_hvg_csv.values
-pseudo_csv = pd.read_csv(pseudo_file,index_col=0)
+#two_time_choose_hvg_csv = pd.read_csv(choose_hvg_distanc_comp_file,index_col=0)
+#two_time_choose_hvg_np  = two_time_choose_hvg_csv.values
+
 all_index = pic_distance_csv.index.append(pic_distance_csv.columns)
 new_pseudo_time = pd.DataFrame(index=all_single_cell_csv.index,columns=["pseudotime"])
 for i in new_pseudo_time.index:
     cell_name = all_single_cell_csv.loc[i,"single_cell_name"].split(" ")[0]
-    new_pseudo_time.loc[i,"pseudotime"] =  pseudo_csv.loc[cell_name,"pseudotime"]
+    if(pseudo_time_tag == True):
+        new_pseudo_time.loc[i,"pseudotime"] =  pseudo_csv.loc[cell_name,"pseudotime"]
+    else:
+        new_pseudo_time.loc[i,"pseudotime"] =  0
 two_distence = (1 - ratio) * two_time_autoencode_np  + ratio * pic_distance_csv_np
 similar_threshold = 25
 edges = []
@@ -65,7 +73,7 @@ for i in range(after_num):
     cell_gene_similar_value = []
     for pic_cell in maybe_point:
 
-        cell_gene_similar_value.append(two_time_choose_hvg_np[pic_cell,i])
+        cell_gene_similar_value.append(two_time_autoencode_np[pic_cell,i])
 
     cell_gene_similar_value,maybe_point = bubbleSort(cell_gene_similar_value,maybe_point)
 
@@ -153,4 +161,3 @@ except KeyError as e:
                             },name = i)
         edges_csv = edges_csv.append(series)
     edges_csv.to_csv(samll_TL_edges_save_file)
-print("TL_get is over")
