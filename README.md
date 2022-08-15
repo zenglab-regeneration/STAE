@@ -70,5 +70,5 @@ dam = c('Nb2')
 stae(pdr)  
 stae_draw(dam)
 ```
-
+![STAE_example](image/stae_example.png)
 
