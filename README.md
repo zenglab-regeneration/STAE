@@ -79,5 +79,5 @@ stae(pdr,pseflag)
 dam = c('Nb2') 
 staePlot(dam)
 ```
-plotResult
+### plotResult  
 ![STAE_example](image/stae.jpeg)
