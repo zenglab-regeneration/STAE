@@ -57,7 +57,7 @@ pythonEnvSet("D:/anaconda/envs/testconda")
 #Check the dependent environment for the program to run, and automatically install the missing python package
 testEnv()
 ```
-### dataProcessing
+### Data processing
 ```
 dataProcessing(bimr,aimr,bsd,asd,mg,pse)  
 
@@ -73,11 +73,11 @@ pdr = 0.1
 pseflag <- FALSE
 stae(pdr,pseflag)  
 ```
-### staePlot
+### Stae plot
 ```
 #Differentiation and migration of cell type
 dam = c('Nb2') 
 staePlot(dam)
 ```
-### plotResult  
+### Result plot  
 ![STAE_example](image/stae.jpeg)
