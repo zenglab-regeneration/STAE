@@ -68,11 +68,13 @@ dataProcessing(bimr,aimr,bsd,asd,mg,pse)
 ```
 ### Run
 ```
-#data used for this process will be automatically called if dataProcessing has been run
 #position distance ratio
 pdr = 0.1  
+
 #pseflag ：Pseudo-time files are not used by default
 pseflag <- FALSE
+
+#data used for this process will be automatically called if dataProcessing has been run
 stae(pdr,pseflag)  
 ```
 ### Stae plot
