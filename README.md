@@ -79,4 +79,4 @@ stae(pdr,pseflag)
 dam = c('Nb2') 
 staePlot(dam)
 ```
-![STAE_example](image/stae_example.png)
+![STAE_example](image/stae.jpeg)
