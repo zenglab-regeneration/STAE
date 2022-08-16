@@ -59,6 +59,7 @@ testEnv()
 ```
 ### Data processing
 ```
+#Please note that data processed by this function will be stored in the package and not be return
 dataProcessing(bimr,aimr,bsd,asd,mg,pse)  
 
 #If you don't have a pse file please pass in an empty data frame
@@ -67,6 +68,7 @@ dataProcessing(bimr,aimr,bsd,asd,mg,pse)
 ```
 ### Run
 ```
+#data used for this process will be automatically called if dataProcessing has been run
 #position distance ratio
 pdr = 0.1  
 #pseflag ：Pseudo-time files are not used by default
