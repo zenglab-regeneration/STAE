@@ -4,7 +4,7 @@ packages_path<-function(){
   #packages_dir <- c('E:/work/sunhang/code/package_0708')
   return(packages_dir)
 }
-#'@title env_python_set
+#'@title PythonEnvSet
 #'@description
 #'Set the path of the conda environment you use
 #'Many python programs are called in our program,
@@ -13,19 +13,19 @@ packages_path<-function(){
 #'@param py_path path of the conda environment
 #'@import reticulate
 #'@export
-env_python_set<-function(py_path){
+pythonEnvSet <- function(py_path){
   # library(reticulate)
   use_condaenv(py_path)
   #use_python(py_path)
 }
-#'@title env_test
+#'@title TestEnv
 #'Detect environment dependencies of python
 #'@description
 #'You can use this function to detect if a package is missing from a dependent python environment.
 #'@return bool TRUE or FALSE
 #'@import reticulate
 #'@export
-env_test<-function(){
+testEnv<-function(){
   library(reticulate)
   package_flag<-TRUE
   package_detect<-c('time',
@@ -55,7 +55,7 @@ env_test<-function(){
   return(package_flag)
 }
 
-#'@title parameter_setting
+#'@title SetParameters
 #'Hyperparameter setting
 #'@description
 #'Set Resolution and Cell Columns,resolution is the multiple of program amplification,
@@ -64,7 +64,7 @@ env_test<-function(){
 #'@param dam Differentiation and migration of cell type
 #' @param pseflag Whether there is pseudo-temporal data(True/False) : True
 #'@export
-Parameter_settings<-function(pdr,pseflag){
+setParameters <- function(pdr,pseflag){
   parameter_settings_csv<-c(pdr,pseflag)
   dir=packages_path()
   parameter_settings_path = paste(dir,"/data/parameter_settings.csv",sep="")
@@ -72,8 +72,7 @@ Parameter_settings<-function(pdr,pseflag){
 }
 
 #'@import reticulate
-#'@export
-call_python_program<-function(pyname){
+callPythonProgram<-function(pyname){
   #package_path<-c('E:/work/sunhang/code/package_0708')
   package_path_dir <- packages_path()
   os<-import('os')
@@ -83,7 +82,7 @@ call_python_program<-function(pyname){
   source_python(py_dir)
 }
 
-#'@title data_deal
+#'@title dataProcessing
 #'@param bimr before_iterative_mapping_result
 #'@param aimr after_iterative_mapping_result
 #'@param bsd before_sc_data
@@ -91,7 +90,7 @@ call_python_program<-function(pyname){
 #'@param pse pseudotime
 #'@import data.table
 #'@export
-data_deal<-function(bimr,aimr,bsd,asd,pse = 1){
+dataProcessing<-function(bimr,aimr,bsd,asd,pse = 1){
   library(data.table)
   # before_iterative_mapping_result <- bimr
   # after_iterative_mapping_result <- aimr
@@ -108,28 +107,27 @@ data_deal<-function(bimr,aimr,bsd,asd,pse = 1){
   fwrite(as.data.frame(bsd),file = paste(data_path,'/before_sc_data.csv',sep = ''))
   fwrite(as.data.frame(asd),file = paste(data_path,'/after_sc_data.csv',sep = ''))
   fwrite(as.data.frame(pse),file = paste(data_path,'/pseudotime.csv',sep = ''))
-  
 }
-#'@title stae_main 
+#'@title stae
 #'@description main programe
 #'@export
 stae <- function(pdr,pseflag = FALSE){
-  Parameter_settings(pdr = pdr,pseflag = pseflag)
-  call_python_program('move_center')
-  call_python_program('TL_pic_distance_new')
-  call_python_program('TL_sample_get_adata')
-  call_python_program('AE')
-  call_python_program('TL_get')
+  setParameters(pdr = pdr,pseflag = pseflag)
+  callPythonProgram('move_center')
+  callPythonProgram('TL_pic_distance_new')
+  callPythonProgram('TL_sample_get_adata')
+  callPythonProgram('AE')
+  callPythonProgram('TL_get')
   reault_path <- paste(packages_path(),'/data/result/tow_time_TL_edges.csv',sep = "")
   stae_result <- fread(input = reault_path)
   return(stae_result)
 }
-#'@title stae_draw
+#'@title staePlot
 #' @description draw result
 #' @export
-stae_draw <- function(dam){
+staePlot <- function(dam){
   Parameter_settings(pdr = dam,pseflag = FALSE)
-  call_python_program('pic')
+  callPythonProgram('pic')
 }
 
 
