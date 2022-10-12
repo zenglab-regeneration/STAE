@@ -102,11 +102,11 @@ dataProcessing<-function(bimr,aimr,bsd,asd,pse = 1){
   if(!dir.exists(data_path)){
     dir.create(data_path)
   }
-  fwrite(as.data.frame(bimr),file = paste(data_path,'/before_iterative_mapping_result.csv',sep = ''))
-  fwrite(as.data.frame(aimr),file = paste(data_path,'/after_iterative_mapping_result.csv',sep = ''))
-  fwrite(as.data.frame(bsd),file = paste(data_path,'/before_sc_data.csv',sep = ''))
-  fwrite(as.data.frame(asd),file = paste(data_path,'/after_sc_data.csv',sep = ''))
-  fwrite(as.data.frame(pse),file = paste(data_path,'/pseudotime.csv',sep = ''))
+  fwrite(as.data.frame(bimr),file = paste(data_path,'/before_iterative_mapping_result.csv',sep = ''),row.names = TRUE)
+  fwrite(as.data.frame(aimr),file = paste(data_path,'/after_iterative_mapping_result.csv',sep = ''),row.names = TRUE)
+  fwrite(as.data.frame(bsd),file = paste(data_path,'/before_sc_data.csv',sep = ''),row.names = TRUE)
+  fwrite(as.data.frame(asd),file = paste(data_path,'/after_sc_data.csv',sep = ''),row.names = TRUE)
+  fwrite(as.data.frame(pse),file = paste(data_path,'/pseudotime.csv',sep = ''),row.names = TRUE)
 }
 #'@title stae
 #'@description main programe
