@@ -41,7 +41,6 @@ conda create -n testconda python = 3.9
 - aimr after_iterative_mapping_result    -By matching single cells, the gene expression of the spatial data at the latter time point is obtained
 - bsd before_sc_data                     -Gene expression in single cells at the previous time point
 - asd after_sc_data                      -Gene expression in cells at the latter time point
-- mg marker_gene                         -Cell's id number and type
 - pse pseudotime                         -Pseudo-time information for each cell
 
 ### Environment settings
@@ -60,11 +59,11 @@ testEnv()
 ### Data processing
 ```
 #Please note that data processed by this function will be stored in the package and not be return
-dataProcessing(bimr,aimr,bsd,asd,mg,pse)  
+dataProcessing(bimr,aimr,bsd,asd,pse)  
 
 #If you don't have a pse file please pass in an empty data frame
 pse <- as.data.frame(matrix(nrow=0,ncol=3))
-dataProcessing(bimr,aimr,bsd,asd,mg,pse) 
+dataProcessing(bimr,aimr,bsd,asd,pse) 
 ```
 ### Run
 ```
